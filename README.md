@@ -9,13 +9,13 @@ A Laravel adapter for the [VIES REST API package](https://github.com/omisai-tech
 
 ## Features
 
-- ✅ **Type-safe**: PHP 8.1+ type declarations and modern enum support
-- ✅ **Clean architecture**: DTOs, validation, and HTTP adapters
-- ✅ **Production + test modes**: Switch services via `ViesConfig`
-- ✅ **Error handling**: Structured exceptions for validation and REST errors
-- ✅ **Approximate matching**: Trader detail matching support
-- ✅ **All EU countries**: EU member states plus Northern Ireland
-- ✅ **Tested**: Pest-based test suite
+- **Type-safe**: PHP 8.1+ type declarations and modern enum support
+- **Clean architecture**: DTOs, validation, and HTTP adapters
+- **Production + test modes**: Switch services via `ViesConfig`
+- **Error handling**: Structured exceptions for validation and REST errors
+- **Approximate matching**: Trader detail matching support
+- **All EU countries**: EU member states plus Northern Ireland
+- **Tested**: Pest-based test suite
 
 ## Requirements
 
