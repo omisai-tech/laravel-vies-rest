@@ -37,21 +37,47 @@ This package requires the base `omisai/vies-rest` package.
 
 The `Omisai\LaravelViesRest\ViesRestServiceProvider` service provider automatically registers the Laravel HTTP client adapter. The `Omisai\ViesRest\ViesClient` will use Laravel's HTTP client instead of direct Guzzle.
 
-### Basic VAT Validation
+### Via Dependency Injection
 
 ```php
+...
 use Omisai\ViesRest\ViesClient;
+use Omisai\ViesRest\Enum\EuropeanUnionCountry;
 
-$client = new ViesClient();
-$response = $client->checkVat('DE', '123456789');
+class ExampleController extends Controller
+{
+    public function __construct(
+        private ViesClient $viesClient,
+    ) {}
 
-if ($response->valid) {
-    echo "✅ Valid VAT: {$response->countryCode}{$response->vatNumber}\n";
-    echo "Company: {$response->name}\n";
-    echo "Address: {$response->address}\n";
-} else {
-    echo "❌ Invalid VAT number\n";
+    public function checkVat(Request $request)
+    {
+        $countryCode = $request->input('country_code');
+        $vatNumber = $request->input('vat_number');
+
+        $isValidCountryCode = EuropeanUnionCountry::validateCountryCode($countryCode);
+        if (!$isValidCountryCode) {
+            return response()->json(['error' => 'Invalid country code'], 400);
+        }
+
+        $response = $this->viesClient->checkVat($countryCode, $vatNumber);
+
+        return response()->json([
+            'valid' => $response->valid,
+            'name' => $response->name,
+            'address' => $response->address,
+        ]);
+    }
 }
+```
+
+### Via Service Container Resolution
+
+```php
+<?php
+// In a controller, service, or route closure
+$client = app(ViesClient::class);
+$response = $client->checkVat('DE', '123456789');
 ```
 
 ### Using the Test Service
@@ -60,7 +86,10 @@ if ($response->valid) {
 use Omisai\ViesRest\ViesClient;
 use Omisai\ViesRest\ViesConfig;
 
-$client = new ViesClient(ViesConfig::test());
+$config = ViesConfig::test(); /
+$factory = app(HttpClientFactoryInterface::class);
+$client = new ViesClient($config, $factory);
+
 $response = $client->checkVat('DE', '100');
 
 var_dump($response->valid); // true for test numbers
@@ -134,6 +163,8 @@ $request = new CheckVatRequest(
 #### CheckVatResponse
 
 ```php
+# Omisai\ViesRest\DTO\CheckVatResponse;
+
 echo $response->countryCode;
 echo $response->vatNumber;
 echo $response->requestDate->format('Y-m-d');
@@ -157,7 +188,7 @@ $isValid = EuropeanUnionCountry::isEuropeanUnionCountryCode('US'); // false
 use Omisai\ViesRest\Exceptions\ViesValidationException;
 use Omisai\ViesRest\ViesClient;
 
-$client = new ViesClient();
+$client = app(ViesClient::class);
 
 try {
     $client->checkVat('INVALID', '123');
@@ -172,7 +203,7 @@ try {
 use Omisai\ViesRest\Exceptions\ViesApiException;
 use Omisai\ViesRest\ViesClient;
 
-$client = new ViesClient();
+$client = app(ViesClient::class);
 
 try {
     $client->checkVat('DE', '123456789');
@@ -220,7 +251,7 @@ $client = new ViesClient(validator: new CustomVatNumberValidator());
 ```php
 use Omisai\ViesRest\ViesClient;
 
-$client = new ViesClient();
+$client = app(ViesClient::class);
 $vatNumbers = [
     ['DE', '123456789'],
     ['NL', '123456789B01'],
