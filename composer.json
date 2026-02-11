@@ -1,0 +1,48 @@
+{
+    "name": "omisai/laravel-vies-rest",
+    "description": "Laravel adapter for the VIES REST API package",
+    "keywords": [
+        "vies",
+        "laravel",
+        "sdk",
+        "rest",
+        "api"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.1",
+        "omisai/vies-rest": "*",
+        "illuminate/http": ">=10.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.0",
+        "orchestra/testbench": "^8.0|^9.0",
+        "laravel/pint": "^1.27"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omisai\\LaravelViesRest\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Omisai\\LaravelViesRest\\ViesRestServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "pint": "./vendor/laravel/pint/builds/pint"
+    }
+}
