@@ -5,7 +5,7 @@
 [![Test](https://github.com/omisai-tech/laravel-vies-rest/actions/workflows/test.yml/badge.svg)](https://github.com/omisai-tech/laravel-vies-rest/actions/workflows/test.yml)
 [![PHP Version Require](https://img.shields.io/badge/PHP-%3E%3D8.1-blue?style=flat-square&logo=php)](https://packagist.org/packages/omisai/laravel-vies-rest)
 
-A Laravel adapter for the [VIES REST API package](https://github.com/omisai-tech/laravel-vies-rest), utilizing Laravel's HTTP client.
+A Laravel adapter for the [VIES REST API package](https://github.com/omisai-tech/php-vies-rest), utilizing Laravel's HTTP client.
 
 ## Features
 
