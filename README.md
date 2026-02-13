@@ -312,7 +312,7 @@ If you discover any security-related issues, please email security@omisai.com in
 
 ## License
 
-This package is open-sourced software licensed under the [MIT license](https://github.com/sponsors/omisai-tech/LICENSE).
+This package is open-sourced software licensed under the [MIT license](LICENSE).
 
 ## Sponsoring
 
