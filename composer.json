@@ -43,6 +43,7 @@
     },
     "scripts": {
         "test": "vendor/bin/pest",
-        "pint": "./vendor/laravel/pint/builds/pint"
+        "lint": "pint --parallel",
+        "test:lint": "pint --parallel --test"
     }
 }
