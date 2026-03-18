@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Omisai\LaravelViesRest\Http;
 
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Facades\Http;
 use Omisai\ViesRest\Contracts\HttpClientInterface;
 use Omisai\ViesRest\Exceptions\ViesApiException;
 
@@ -36,7 +37,7 @@ class LaravelHttpClientAdapter implements HttpClientInterface
     private function request(string $method, string $path, ?array $payload = null): array
     {
         if ($this->client === null) {
-            $this->client = \Illuminate\Support\Facades\Http::timeout($this->options['timeout'] ?? 30)
+            $this->client = Http::timeout($this->options['timeout'] ?? 30)
                 ->retry($this->options['retry'] ?? 3, $this->options['retry_delay'] ?? 100);
         }
 
