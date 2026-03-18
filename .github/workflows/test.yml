@@ -37,7 +37,7 @@ jobs:
                       laravel: 13.*
                     - php: 8.2
                       laravel: 13.*
-        name: PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - ${{ matrix.dependency-version }}
         steps:
             - uses: actions/checkout@v6
 
